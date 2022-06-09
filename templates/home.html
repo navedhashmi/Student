@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="{{ url_for('static', path='/main.css') }}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">-->
+  </head>
+  <body>
+    
+    <div class="container">
+        <div class="welcome">
+          <div class="pinkbox">
+            <div class="signup nodisplay">
+              <h1>Register</h1>
+              <form autocomplete="off">
+                <input type="text" name="username" placeholder="username">
+                <input type="email" name="email" placeholder="email">
+                <input type="password" name="password" placeholder="password">
+                <input type="password" placeholder="confirm password">
+                <button class="button submit" type="submit" formmethod="POST"> Create account </button>
+              </form>
+            </div>
+            <div class="signin">
+              <h1>Sign In</h1>
+              <!--<form class="more-padding" autocomplete="off">
+                <input type="text" placeholder="username">
+                <input type="password" placeholder="password">
+                <div class="checkbox">
+                  <input type="checkbox" id="remember" /><label for="remember">Remember me</label>
+                </div>
+      
+                <button class="button submit">Login</button>
+              </form>-->
+            </div>
+          </div>
+          <div class="leftbox">
+            <h2 class="title"><span>STUDENT</span><br>RECORD</h2>
+            <p class="desc">Have a record<span> With Us</span></p>
+            <img class="flower smaller" src="https://image.ibb.co/d5X6pn/1357d638624297b.jpg" alt="1357d638624297b" border="0">
+            <p class="account">Have an account?</p>
+            <button class="button" id="signin">Login</button>
+          </div>
+          <div class="rightbox">
+            <h2 class="title"><span>STUDENT</span><br>RECORD</h2>
+            <p class="desc">Have a record<span> With Us</span></p>
+            <img class="flower" src="https://preview.ibb.co/jvu2Un/0057c1c1bab51a0.jpg"/>
+            <p class="account">Don't have an account?</p>
+            <button class="button" id="signup">Sign up</button>
+          </div>
+        </div>
+       </div>
+      
+      </div>
+      <script src="{{ url_for('static', path='/main.js') }}"></script>
+      <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>-->
+  </body>
+</html>
