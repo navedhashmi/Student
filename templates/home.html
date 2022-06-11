@@ -25,14 +25,13 @@
             </div>
             <div class="signin">
               <h1>Sign In</h1>
-              <form class="more-padding" autocomplete="off">
-                <input type="text" placeholder="username">
-                <input type="password" placeholder="password">
+              <form class="more-padding" autocomplete="off" action="/login" method="post">
+                <input type="text" name="username" placeholder="username">
+                <input type="password" name="password" placeholder="password">
                 <div class="checkbox">
                   <input type="checkbox" id="remember" /><label for="remember">Remember me</label>
                 </div>
-      
-                <button class="button submit">Login</button>
+                <button class="button submit" type="submit">Login</button>
               </form>
             </div>
           </div>

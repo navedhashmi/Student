@@ -1,4 +1,3 @@
-
 from db_connection import Base
 from sqlalchemy import TIMESTAMP, Column, Integer, String, Boolean
 from sqlalchemy.sql.expression import null, text
