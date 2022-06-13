@@ -16,10 +16,12 @@ class NewUser(BaseModel):
             password=password)
 
 
+#Scheme for Access Token we suppose to get from user
 class Token(BaseModel):
     access_token: str
     token_type: str
 
+#Scheme for setting up a token_data
 class TokenData(BaseModel):
     id: Optional[str] = None
     username: str

@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Depends
+from fastapi import FastAPI, Request, Depends, HTTPException, status
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
@@ -31,8 +31,11 @@ async def homepage(request: Request, form_data: NewUser = Depends(NewUser.regist
     form_data.password = hash(form_data.password)
     new_user = models.User(**form_data.dict())
     print(new_user.password)
-    db.add(new_user)
-    db.commit()
+    try:
+        db.add(new_user) 
+        db.commit()
+    except:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Email or Username is already in Database")
     context = {"request": request}
     return templates.TemplateResponse("home.html", context)
 
