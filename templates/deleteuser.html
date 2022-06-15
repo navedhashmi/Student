@@ -1,0 +1,17 @@
+<form id='adduser_form' hx-get="/getuser">
+    <h1 class="fw-bold fs-3 text-center">Delete-User</h1>
+        <div class="col-md-4 mb-3 ms-3 me-3">
+          <label for="validationServerUsername">Username</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="inputGroupPrepend3">@</span>
+            </div>
+            <input type="text" class="form-control is-invalid" id="validationServerUsername" name="username" placeholder="Username" aria-describedby="inputGroupPrepend3" required>
+            <div class="invalid-feedback">
+              Please choose a username to get data.
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary ms-3 me-3 mt-2" type="submit">Get Data</button>
+    </form>

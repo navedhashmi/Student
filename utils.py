@@ -1,5 +1,8 @@
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
+from fastapi.templating import Jinja2Templates
 from passlib.context import CryptContext
+
+#_____________________________________________________________________________________________________________________#
 
 pass_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -11,12 +14,29 @@ def hash(password: str):
 def verify(plain_password, hashed_password):
     return pass_context.verify(plain_password, hashed_password)
 
-#Template Rendering
-def render()
+#_____________________________________________________________________________________________________________________#
+
+templates = Jinja2Templates(directory="templates")
+
+#Template Rendering Shortcut
+def render(request, template_name, context={}, status_code:int=200, cookies:dict={}):
+    copy_context = context.copy()
+    copy_context.update({"request": request})
+    template_to_render = templates.get_template(template_name)
+    html_context = template_to_render.render(copy_context)
+    response = HTMLResponse(html_context, status_code=status_code)
+    if len(cookies.keys()) > 0:
+        for key, value in cookies.items():
+            response.set_cookie(key=key, value=value, httponly=True)
+    return response
+
 
 #Redirect Responses
-#def redirect(path, cookies:dict={}):
-    #response = RedirectResponse(path, status_code=302)
+def redirect(path, cookies:dict={}):
+    response = RedirectResponse(path, status_code=302)
+    for key, value in cookies.items():
+            response.set_cookie(key=key, value=value, httponly=True)
+    return response
 
 
 

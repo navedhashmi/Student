@@ -1,0 +1,33 @@
+<form id='adduser_form' hx-post="/register">
+  <h1 class="fw-bold fs-3 text-center">Add-User</h1>
+      <div class="col-md-4 mb-3 ms-3 me-3">
+        <label for="validationServerUsername">Username</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend3">@</span>
+          </div>
+          <input type="text" class="form-control is-invalid" id="validationServerUsername" name="username" placeholder="Username" aria-describedby="inputGroupPrepend3" required>
+          <div class="invalid-feedback">
+            Please choose a username.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6 mb-3 ms-3 me-3">
+        <label for="validationServer03">Email</label>
+        <input type="text" class="form-control is-invalid" id="validationServer03" name="email" placeholder="Email" required>
+        <div class="invalid-feedback">
+          Please provide a valid email.
+        </div>
+      </div>
+      <div class="col-md-4 mb-3 ms-3 me-3">
+        <label for="validationServer04">Password</label>
+        <input type="text" class="form-control is-invalid" id="validationServer04" name="password" placeholder="Password" required>
+        <div class="invalid-feedback">
+          Please provide a password including numbers and digit.
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary ms-3 me-3 mt-2" type="submit">Submit form</button>
+  </form>
