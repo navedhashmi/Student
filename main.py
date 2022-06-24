@@ -150,7 +150,6 @@ async def table_edit(request: Request, id: Optional[str], update: UpdateUser = D
     user = db.query(models.User).filter(models.User.id == id)
     user_data = user.first()
     update_data = {"id": user_data.id, "username": update.edited_username, "email": update.email, "isAdmin": update.isAdmin, "created_at": user_data.created_at}
-    print(update_data)
     user.update(update_data, synchronize_session=False)
     db.commit()
     context = update_data
