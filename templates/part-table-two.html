@@ -1,0 +1,27 @@
+<table id="table_of_student" class="table table-striped table-dark mt-3" hx-target="#table_of_student" hx-swap="outerHTML">
+    <thead>
+      <tr>
+        <th>#UID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>isAdmin</th>
+        <th>Created_at</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{id}}</td>
+            <td>{{username}}</td>
+            <td>{{email}}</td>
+            <td>{{isAdmin}}</td>
+            <td>{{created_at}}</td>
+            <td>
+              <button class="btn btn-danger"
+                      hx-get="/contact/{{id}}/edit">
+                Edit
+              </button>
+            </td>
+          </tr>
+    </tbody>
+  </table>

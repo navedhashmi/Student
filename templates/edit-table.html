@@ -1,0 +1,27 @@
+<table class="table table-striped table-dark mt-3" hx-trigger='cancel' class='editing' hx-get="/contact/{{username}}/edit">
+    <thead>
+      <tr>
+        <th>#UID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>isAdmin</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{id}}</td>
+            <td><input name='edited_username' value={{username}}></td>
+            <td><input name='email' value={{email}}></td>
+            <td><input name='isAdmin' value={{isAdmin}}></td>
+            <td>
+                <button class="btn btn-danger" hx-get="/contact/{{id}}/edit">
+                Cancel
+                </button>
+                <button class="btn btn-danger" hx-put="/contact/{{id}}/update" hx-include="closest tr">
+                Save
+                </button>
+            </td>
+        </tr>
+    </tbody>
+  </table>

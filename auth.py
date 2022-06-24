@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, status, HTTPException, Request
+from fastapi import APIRouter, Depends, status, HTTPException, Request, Header
+from typing import Optional
 import db_connection, models, utils, oauth2
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm #Oauth2 built in credentials Schema
 
@@ -6,7 +7,7 @@ router = APIRouter(tags=['Authentication'])
 
 
 @router.post('/login')
-def login(request: Request, user_credentials: OAuth2PasswordRequestForm = Depends(), db: db_connection.Se = Depends(db_connection.get_db)):
+def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: db_connection.Se = Depends(db_connection.get_db)):
     user = db.query(models.User).filter(models.User.username == user_credentials.username).first()
 
     if not user:
@@ -20,3 +21,9 @@ def login(request: Request, user_credentials: OAuth2PasswordRequestForm = Depend
     access_token = oauth2.create_access_token(data = {"user_id": user.id, "username": user.username})
     token = {"session_id": access_token}
     return utils.redirect(path="/adminpanel", cookies=token)
+
+#Logout Functionality
+@router.get("/logout")
+async def logout():
+    token = {"session_id": "", "logout": "Logout Successfully"}
+    return utils.redirect(path="/", cookies=token)

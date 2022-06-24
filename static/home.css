@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400|Lora');
  body {
-	 background: #cbc0d3;
+	 background: #212121;
 }
 /* div box styling */
  .container {
@@ -28,7 +28,7 @@
 	 background: #eac7cc;
 	 width: 320px;
 	 height: 500px;
-	 border-radius: 5px;
+	 border-radius: 60px;
 	 box-shadow: 2px 0 10px rgba(0, 0, 0, .1);
 	 transition: all 0.5s ease-in-out;
 	 z-index: 2;
@@ -47,16 +47,17 @@
 }
  .rightbox {
 	 right: -2%;
+	 bottom: 11%;
 }
 /* font & button styling */
  h1 {
 	 font-family: 'Open Sans', sans-serif;
 	 text-align: center;
-	 margin-top: 95px;
+	 margin-top: 65px;
 	 text-transform: uppercase;
 	 color: #f6f6f6;
-	 font-size: 2em;
-	 letter-spacing: 8px;
+	 font-size: 2.5em;
+	 letter-spacing: 4px;
 }
  .title {
 	 font-family: 'Lora', serif;
@@ -85,20 +86,19 @@
  span {
 	 color: #eac7cc;
 }
- .flower {
-	 position: absolute;
-	 width: 120px;
-	 height: 120px;
-	 top: 46%;
-	 left: 29%;
-	 opacity: 0.7;
+ .right-image {
+	position: absolute;
+	width: 130px;
+	height: 150px;
+	top: 41%;
+	left: 33%;
 }
- .smaller {
-	 width: 90px;
-	 height: 100px;
-	 top: 48%;
-	 left: 38%;
-	 opacity: 0.9;
+ .left-image {
+	position: absolute;
+	width: 190px;
+	height: 200px;
+	top: 37%;
+	left: 22%;
 }
  button {
 	 padding: 12px;

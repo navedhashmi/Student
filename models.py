@@ -1,6 +1,6 @@
 from db_connection import Base
 from sqlalchemy import TIMESTAMP, Column, Integer, String, Boolean
-from sqlalchemy.sql.expression import null, text
+from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 
 class User(Base):

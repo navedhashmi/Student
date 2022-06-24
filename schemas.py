@@ -15,6 +15,21 @@ class NewUser(BaseModel):
             email=email,
             password=password)
 
+class UpdateUser(BaseModel):
+    #username: str
+    #id: str
+    edited_username: str
+    email: str
+    isAdmin: bool
+
+    @classmethod
+    def update_form(cls, edited_username: str = Form(...), email: str = Form(...), isAdmin: bool = Form(...)):
+        return cls(
+            edited_username=edited_username,
+            email=email,
+            isAdmin=isAdmin)
+
+
 
 #Scheme for Access Token we suppose to get from user
 class Token(BaseModel):
