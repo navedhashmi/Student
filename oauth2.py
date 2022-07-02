@@ -2,8 +2,9 @@ from fastapi import Depends, HTTPException, status
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from schemas import TokenData
-from fastapi.security.oauth2 import OAuth2PasswordBearer
 from config import get_settings
+import db_connection, models
+
 
 # Instance of Enviorment Variables
 settings = get_settings()
@@ -15,8 +16,6 @@ ALGORITHM = settings.algorithm
 #Expriation Time
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 #Algorithm
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 #Create Access Token:
 def create_access_token(data: dict):
@@ -38,20 +37,31 @@ def verify_access_token(token: str):
         payload = jwt.decode(token, SECERT_KEY, algorithms=[ALGORITHM])
         id: str = payload.get("user_id")
         username: str = payload.get("username")
-        if id is None:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
+        if id is None or username is None:
+            return None
+            # raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
         token_data = TokenData(id=id, username=username)
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
     return token_data
 
-def get_current_user(token: str = Depends(oauth2_scheme)):
-    return verify_access_token(token)
 
-
-
-# Ruff Code:
-#error = {"ErrorNum": "401", "ErrorDetail": "UNAUTHORIZED"}
-#headers = {"WWW-Authenticate": "Bearer"}
-#return render(Request, "error.html", context=error, status_code=status.HTTP_401_UNAUTHORIZED, cookies=headers, error=True)
-#return templates.TemplateResponse("error.html", {"request": Request, "ErrorNum": "401", "ErrorDetail": "UNAUTHORIZED"}, status_code=status.HTTP_401_UNAUTHORIZED)
+def verify_admin_user(token: str, database_x = db_connection.SeassionLocal):
+    try:
+        payload = jwt.decode(token, SECERT_KEY, algorithms=[ALGORITHM])
+        id: str = payload.get("user_id")
+        username: str = payload.get("username")
+        if id is None or username is None:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
+        #user = database_x.query(models.User).filter(models.User.username == username)
+        database = database_x()
+        user = database.query(models.User).filter(models.User.username == username).first()
+        print(user.username)
+        if not user:
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid Credentials")
+        if user.isAdmin == False:
+            return None
+        token_data = TokenData(id=id, username=username)
+    except JWTError:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
+    return token_data

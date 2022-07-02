@@ -1,11 +1,14 @@
 from typing import Optional
+from starlette.middleware import Middleware
+from starlette.authentication import requires
+from starlette.middleware.authentication import AuthenticationMiddleware
 from fastapi import FastAPI, Header, Request, Depends, HTTPException, status
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from decorators import login_required
 from utils import redirect, render
 from schemas import NewUser, UpdateUser
-import models, auth
+import models, auth, middleware
 from utils import hash, userdata_list
 from starlette.exceptions import HTTPException as HTTPStarException
 from db_connection import engine, get_db, Se #Se = Session imported from db_connection
@@ -13,9 +16,13 @@ from db_connection import engine, get_db, Se #Se = Session imported from db_conn
 # Models Execution
 models.Base.metadata.create_all(bind=engine)
 
+#middleware = [
+#  Middleware(AuthenticationMiddleware, backend=middleware.JWTCookieBackend()),
+#]
 
 #FastAPI app instance
 app = FastAPI()
+app.add_middleware(AuthenticationMiddleware, backend=middleware.JWTCookieBackend())
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
@@ -36,6 +43,7 @@ async def http_exception_handler(request, exc):
 
 @app.get("/", response_class=HTMLResponse)
 def homepage(request: Request):
+    #print(request.user)
     return render(request, "home.html")
 
 #####################___Register | Add__#####################
@@ -59,6 +67,7 @@ async def user_register(request: Request, form_data: NewUser = Depends(NewUser.r
 #####################___AdminDashboard-Home__#####################
 
 @app.get("/adminpanel", response_class=HTMLResponse)
+#@requires(['admin'])
 @login_required
 def admin_home(request: Request):
     return render(request, "admin.html")
