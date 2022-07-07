@@ -1,10 +1,14 @@
 from fastapi import APIRouter, Depends, status, HTTPException, Request, Header
-from typing import Optional
 import db_connection, models, utils, oauth2
-from fastapi.security.oauth2 import OAuth2PasswordRequestForm #Oauth2 built in credentials Schema
+from fastapi.security.oauth2 import OAuth2PasswordRequestForm #Oauth2 built in credentials Schem
 
+#Router Instance
 
 router = APIRouter(tags=['Authentication']) 
+
+#_________________________________________________________________________________________________________________________________________________________#
+
+#Router Methods - User Login and redirect to Homepage
  
 @router.post('/login')
 def login(user_credentials: OAuth2PasswordRequestForm = Depends(), db: db_connection.Se = Depends(db_connection.get_db)):

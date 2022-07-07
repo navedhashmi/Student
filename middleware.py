@@ -1,6 +1,4 @@
 import oauth2
-from fastapi import Depends
-import db_connection
 from starlette.authentication import (
     AuthenticationBackend,
     SimpleUser,
@@ -8,17 +6,17 @@ from starlette.authentication import (
     AuthCredentials,
 )
 
+#Custom Backend to check if the use is admin or not
+
 class JWTCookieBackend(AuthenticationBackend):
     async def authenticate(self, request):
         session_id = request.cookies.get("session_id")
-        if session_id is None:
+        if session_id is None or session_id == "": 
             roles = ["unauthenticated"]
             return UnauthenticatedUser(), AuthCredentials(roles)
         user_data = oauth2.verify_admin_user(session_id)
-        print(user_data)
-        #if user_data is None:
-        #    roles = ["user"]
-        #    return UnauthenticatedUser(), AuthCredentials(roles)
-        #user_id = user_data.get("user_id")
+        if user_data is None:
+            roles = ["user"]
+            return UnauthenticatedUser(), AuthCredentials(roles)
         roles = ['admin']
-        return AuthCredentials(roles), SimpleUser(user_data)
+        return AuthCredentials(roles), SimpleUser(user_data.id)

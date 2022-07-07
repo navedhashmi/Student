@@ -2,6 +2,8 @@ from fastapi import Request, HTTPException
 from functools import wraps
 from oauth2 import verify_access_token
 
+#This Decorator is used to check if the user is logged in or not by checking the session_id cookie
+
 
 def login_required(func):
     @wraps(func)

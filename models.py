@@ -3,6 +3,8 @@ from sqlalchemy import TIMESTAMP, Column, Integer, String, Boolean
 from sqlalchemy.sql.expression import text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 
+#Database Model for User(Create user table in database)
+
 class User(Base):
     __tablename__ = 'user'
 

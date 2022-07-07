@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import HTTPException, status
 from jose import JWTError, jwt
 from datetime import datetime, timedelta
 from schemas import TokenData
@@ -45,7 +45,7 @@ def verify_access_token(token: str):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
     return token_data
 
-
+#verify_admin_user (This used in middleware)
 def verify_admin_user(token: str, database_x = db_connection.SeassionLocal):
     try:
         payload = jwt.decode(token, SECERT_KEY, algorithms=[ALGORITHM])
@@ -56,7 +56,6 @@ def verify_admin_user(token: str, database_x = db_connection.SeassionLocal):
         #user = database_x.query(models.User).filter(models.User.username == username)
         database = database_x()
         user = database.query(models.User).filter(models.User.username == username).first()
-        print(user.username)
         if not user:
             raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Invalid Credentials")
         if user.isAdmin == False:
