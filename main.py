@@ -7,7 +7,7 @@ from fastapi.staticfiles import StaticFiles
 from decorators import login_required
 from utils import redirect, render
 from schemas import NewUser, UpdateUser
-import models, auth, middleware
+import models, auth, middleware, requests
 from utils import hash, userdata_list, tags_metadata
 from config import get_settings
 from starlette.exceptions import HTTPException as HTTPStarException
@@ -76,6 +76,9 @@ async def user_register(request: Request, form_data: NewUser = Depends(NewUser.r
     if response_format() == JSONResponse:
         return render(context)
     else:
+        url = "https://http-api-2022.azurewebsites.net:443/api/fast-api-workflow/triggers/manual/invoke?api-version=2022-05-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=yID1wk7brBdxmpltXrI2erDuD3wnohdXJLvP9vObuNA"
+        headers = {'Content-Type': 'application/json'}
+        requests.post(url, json={"name": new_user.username, "email": new_user.email}, headers=headers)
         return render(request, "home.html", context)
 
 #API Calls : Require User Login
@@ -205,7 +208,6 @@ async def table_edit(request: Request, id: Optional[str], update: UpdateUser = D
 async def table_all(request: Request, db: Se = Depends(get_db), hx_request: Optional[str] = Header(None)):
     users_data = db.query(models.User).all()
     context = userdata_list(users_data)
-    print(context)
     if hx_request is None and response_format() == HTMLResponse:
         raise HTTPException(status_code=404)
     if response_format() == JSONResponse:
